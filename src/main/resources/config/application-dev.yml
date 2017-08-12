@@ -21,10 +21,10 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:postgresql://localhost:5432/eudorahack
+        url: jdbc:postgresql://localhost:5432/eudorahock
         name: eudorahack
         username: postgres
-        password: root
+        password: postgres
     jpa:
         database-platform: com.eudorahack.campus.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL

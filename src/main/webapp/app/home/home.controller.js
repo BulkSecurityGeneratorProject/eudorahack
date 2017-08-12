@@ -5,16 +5,18 @@
         .module('eudorahackApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', 'NgMap', 'NavigatorGeolocation'];
+    HomeController.$inject = ['$scope', '$http', 'Principal', 'LoginService', '$state', 'NgMap', 'NavigatorGeolocation', 'GoogleMapsApi'];
 
-    function HomeController ($scope, Principal, LoginService, $state, NgMap, NavigatorGeolocation) {
+    function HomeController ($scope, $http, Principal, LoginService, $state, NgMap, NavigatorGeolocation, GoogleMapsApi) {
         var vm = this;
 
         vm.account = null;
         vm.isAuthenticated = null;
+        vm.calcDistancia = calcDistancia;
         vm.login = LoginService.open;
         vm.register = register;
         vm.center = {};
+        vm.map = {};
         vm.vendedoras = [];
         vm.online = "content/images/logo2.png";
 
@@ -26,7 +28,6 @@
          var i = 0;
          vm.center.lat = lat;
          vm.center.lng = lng;
-
          vm.vendedoras = [
             {
                 lat: -12.976952,
@@ -60,13 +61,10 @@
             }
         ];
 
-        // for (i = 0 ; i =< vm.vendedoras.length; i++) {
-        //     if (vm.vendedoras[i].online == true) {
-        //         vm.vendedoras[i].icon = vm.online;
-        //     } else {
-        //         vm.vendedoras[i].icon = "http://encontreeudora.com.br/Images/bg/pin-minha-localizacao.png"
-        //     }
-        // }
+        GoogleMapsApi.load("http://localhost:8080").then(function(map) {
+            vm.map = map;
+        });
+        
        });
 
         NgMap.getMap().then(function(map) {
@@ -77,6 +75,48 @@
           });
 
         getAccount();
+        function getEndereco(lat, lng){
+            $http.get("http://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng, function(status,result){
+                console.log(result, status);
+            });
+        }
+        function calcDistancia(lat1, lon1, lat2, lon2, unit) {
+
+             getEndereco(lat1.latLng.lat(), lon1);
+            var origin1 = new google.maps.LatLng(lat1.latLng.lat(), lon1);
+            var destinationA = 'Cliente';
+
+            var origin2 = new google.maps.LatLng(lat2, lon2);
+            var destinationB = 'vendedora';
+
+            var service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix(
+              {
+                origins: [origin1],
+                destinations: [origin2],
+                travelMode: google.maps.TravelMode.WALKING
+              }, callback);
+
+    
+            function callback(response, status) {
+                if (status == google.maps.DistanceMatrixStatus.OK) {
+                    console.log(response);
+                    console.log("Distância:" + response.rows[0].elements[0].distance);
+                    // alert("Duração:" + response.rows[0].elements[0].duration.text);
+                }
+            }
+            // var radlat1 = Math.PI * lat1.latLng.lat()/180
+            // var radlat2 = Math.PI * lat2/180
+            // var theta = lon1 - lon2
+            // var radtheta = Math.PI * theta/180
+            // var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+            // dist = Math.acos(dist)
+            // dist = dist * 180/Math.PI
+            // dist = dist * 60 * 1.1515
+            // if (unit=="K") { dist = dist * 1.609344 }
+            // if (unit=="N") { dist = dist * 0.8684 }
+            // console.log(dist);
+        }
 
         function getAccount() {
             Principal.identity().then(function(account) {
