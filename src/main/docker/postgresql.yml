@@ -1,0 +1,12 @@
+version: '2'
+services:
+    eudorahack-postgresql:
+        container_name: eudorahack-postgresql
+        image: postgres:9.5.3
+        # volumes:
+        #     - ~/volumes/jhipster/eudorahack/postgresql/:/var/lib/postgresql/
+        environment:
+            - POSTGRES_USER=eudorahack
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432
