@@ -17,6 +17,7 @@
         $scope.$on('authenticationSuccess', function() {
             getAccount();
         });
+        vm.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 
         getAccount();
 
