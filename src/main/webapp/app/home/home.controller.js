@@ -16,37 +16,57 @@
         vm.register = register;
         vm.center = {};
         vm.vendedoras = [];
+        vm.online = "content/images/logo2.png";
 
         $scope.$on('authenticationSuccess', function() {
             getAccount();
         });
         NavigatorGeolocation.getCurrentPosition().then(function(position) {
          var lat = position.coords.latitude, lng = position.coords.longitude;
+         var i = 0;
          vm.center.lat = lat;
          vm.center.lng = lng;
 
          vm.vendedoras = [
             {
                 lat: -12.976952,
-                lng: -38.502818
+                lng: -38.502818,
+                online: false,
+                icon: 'http://encontreeudora.com.br/Images/bg/pin-revendedora.png'
             },
             {
                 lat: -12.970242,
-                lng: -38.489248
+                lng: -38.489248,
+                online: false,
+                icon: 'http://encontreeudora.com.br/Images/bg/pin-revendedora.png'
             },
             {
                 lat: -12.977485,
-                lng: -38.496010
+                lng: -38.496010,
+                online: true,
+                icon: 'http://encontreeudora.com.br/Images/bg/pin-revendedora.png'
             },
             {
                 lat: -12.978410,
-                lng: -38.497528
+                lng: -38.497528,
+                online: false,
+                icon: 'http://encontreeudora.com.br/Images/bg/pin-revendedora.png'
             },
             {
                 lat: -12.980769,
-                lng: -38.502474
+                lng: -38.502474,
+                online: true,
+                icon: 'http://encontreeudora.com.br/Images/bg/pin-revendedora.png'
             }
         ];
+
+        // for (i = 0 ; i =< vm.vendedoras.length; i++) {
+        //     if (vm.vendedoras[i].online == true) {
+        //         vm.vendedoras[i].icon = vm.online;
+        //     } else {
+        //         vm.vendedoras[i].icon = "http://encontreeudora.com.br/Images/bg/pin-minha-localizacao.png"
+        //     }
+        // }
        });
 
         NgMap.getMap().then(function(map) {
