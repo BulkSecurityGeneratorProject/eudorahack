@@ -22,9 +22,9 @@ spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:postgresql://localhost:5432/eudorahack
-        name:
-        username: eudorahack
-        password:
+        name: eudorahack
+        username: postgres
+        password: root
     jpa:
         database-platform: com.eudorahack.campus.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL
