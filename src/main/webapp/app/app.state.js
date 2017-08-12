@@ -5,9 +5,9 @@
         .module('eudorahackApp')
         .config(stateConfig);
 
-    stateConfig.$inject = ['$stateProvider'];
+    stateConfig.$inject = ['$stateProvider', 'uiGmapGoogleMapApiProvider'];
 
-    function stateConfig($stateProvider) {
+    function stateConfig($stateProvider, uiGmapGoogleMapApiProvider) {
         $stateProvider.state('app', {
             abstract: true,
             views: {
@@ -24,6 +24,13 @@
                     }
                 ]
             }
+        });
+
+        uiGmapGoogleMapApiProvider.configure({
+            key: 'AIzaSyD0mmApnQLquVEW3R5zQGNxuHkmMgJ4UV8',
+            v: '3.20', //defaults to latest 3.X anyhow
+            libraries: 'weather,geometry,visualization',
+            china: true
         });
     }
 })();

@@ -65,5 +65,8 @@
   },
   "scripts": {
     "test": "gulp test"
+  },
+  "dependencies": {
+    "google-maps": "^3.2.1"
   }
 }
