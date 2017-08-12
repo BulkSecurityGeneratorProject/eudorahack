@@ -36,11 +36,18 @@
             views: {
                 'content@': {
                     templateUrl: 'app/entities/revendedora/revendedora-perfil.html',
-                    controller: 'RevendedoraController',
+                    controller: 'RevendedoraDialogController',
                     controllerAs: 'vm'
                 }
             },
             resolve: {
+                entity: function () {
+                            return {
+                                latitude: null,
+                                longitude: null,
+                                id: null
+                            };
+                        }
             }
         })
         .state('revendedora.chat', {
@@ -53,11 +60,18 @@
             views: {
                 'content@': {
                     templateUrl: 'app/entities/revendedora/revendedora-chat.html',
-                    controller: 'RevendedoraController',
+                    controller: 'RevendedoraDialogController',
                     controllerAs: 'vm'
                 }
             },
             resolve: {
+                entity: function () {
+                            return {
+                                latitude: null,
+                                longitude: null,
+                                id: null
+                            };
+                        }
             }
         })
         .state('revendedora-detail', {

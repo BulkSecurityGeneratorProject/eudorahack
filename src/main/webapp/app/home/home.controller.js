@@ -5,12 +5,13 @@
         .module('eudorahackApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', '$http', 'Principal', 'LoginService', '$state', 'NgMap', 'NavigatorGeolocation', 'GoogleMapsApi'];
+    HomeController.$inject = ['$scope', '$http', '$timeout', 'Principal', 'LoginService', '$state', 'NgMap', 'NavigatorGeolocation', 'GoogleMapsApi', 'Produto', 'entityProdutos'];
 
-    function HomeController ($scope, $http, Principal, LoginService, $state, NgMap, NavigatorGeolocation, GoogleMapsApi) {
+    function HomeController ($scope, $http, $timeout, Principal, LoginService, $state, NgMap, NavigatorGeolocation, GoogleMapsApi, Produto,entityProdutos) {
         var vm = this;
 
         vm.account = null;
+        vm.produtos = entityProdutos;
         vm.isAuthenticated = null;
         vm.calcDistancia = calcDistancia;
         vm.login = LoginService.open;
@@ -19,7 +20,19 @@
         vm.map = {};
         vm.vendedoras = [];
         vm.online = "content/images/logo2.png";
+        vm.refreshProduto = refreshProduto;
 
+        $timeout(function(){
+         loadAll();   
+     },1000);
+        
+
+        function loadAll() {
+            Produto.query(function(result) {
+                console.log('result');
+                vm.produtos = result;
+            });
+        }
         $scope.$on('authenticationSuccess', function() {
             getAccount();
         });
@@ -66,12 +79,15 @@
         });
         
        });
-
+        function refreshProduto (address) {
+            var params = {address: address, sensor: false};
+            return Produto.query();
+          };
         NgMap.getMap().then(function(map) {
             map.center = vm.center;
-            console.log(map.getCenter());
-            console.log('markers', map.markers);
-            console.log('shapes', map.shapes);
+            //console.log(map.getCenter());
+            //console.log('markers', map.markers);
+            //console.log('shapes', map.shapes);
           });
 
         getAccount();

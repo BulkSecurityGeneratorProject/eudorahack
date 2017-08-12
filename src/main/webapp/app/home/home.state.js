@@ -20,6 +20,12 @@
                     controller: 'HomeController',
                     controllerAs: 'vm'
                 }
+            },
+            resolve:{
+                entityProdutos:['Produto', function(Produto){
+                    console.log(Produto.query())
+                    return Produto.query();
+                }]
             }
         });
     }

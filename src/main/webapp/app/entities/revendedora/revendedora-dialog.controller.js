@@ -5,9 +5,9 @@
         .module('eudorahackApp')
         .controller('RevendedoraDialogController', RevendedoraDialogController);
 
-    RevendedoraDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Revendedora', 'Produto', 'Localizacao', 'User'];
+    RevendedoraDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$q', 'entity', 'Revendedora', 'Produto', 'Localizacao', 'User'];
 
-    function RevendedoraDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Revendedora, Produto, Localizacao, User) {
+    function RevendedoraDialogController ($timeout, $scope, $stateParams, $q, entity, Revendedora, Produto, Localizacao, User) {
         var vm = this;
 
         vm.revendedora = entity;
@@ -24,7 +24,7 @@
         });
 
         function clear () {
-            $uibModalInstance.dismiss('cancel');
+            //$uibModalInstance.dismiss('cancel');
         }
 
         function save () {
@@ -38,7 +38,7 @@
 
         function onSaveSuccess (result) {
             $scope.$emit('eudorahackApp:revendedoraUpdate', result);
-            $uibModalInstance.close(result);
+            //$uibModalInstance.close(result);
             vm.isSaving = false;
         }
 

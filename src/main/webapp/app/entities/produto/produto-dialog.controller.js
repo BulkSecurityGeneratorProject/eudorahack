@@ -24,6 +24,7 @@
 
         function loadAll() {
             Produto.query(function(result) {
+                
                 vm.produtos = result;
             });
         }
