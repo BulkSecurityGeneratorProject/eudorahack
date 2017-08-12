@@ -1,0 +1,24 @@
+
+entity Revendedora {
+	latitude Double,
+    longitude Double
+       
+}
+
+entity Localizacao {
+	latitude Double,
+    longitude Double
+}
+
+entity Produto {
+	nome String,
+    codigo String,
+    foto String,
+    quantidade Integer
+}
+
+relationship OneToMany {
+	Revendedora{produto} to Produto,
+    Revendedora{localizacao} to Localizacao
+}
+

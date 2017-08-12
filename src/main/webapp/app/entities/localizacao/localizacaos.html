@@ -1,0 +1,62 @@
+<div>
+    <h2>Localizacaos</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="localizacao.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Localizacao
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Latitude</span></th>
+                    <th><span>Longitude</span></th>
+                    <th><span>Revendedora</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="localizacao in vm.localizacaos track by localizacao.id">
+                    <td><a ui-sref="localizacao-detail({id:localizacao.id})">{{localizacao.id}}</a></td>
+                    <td>{{localizacao.latitude}}</td>
+                    <td>{{localizacao.longitude}}</td>
+                    <td>
+                        <a ui-sref="revendedora-detail({id:localizacao.revendedora.id})">{{localizacao.revendedora.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="localizacao-detail({id:localizacao.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="localizacao.edit({id:localizacao.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="localizacao.delete({id:localizacao.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
