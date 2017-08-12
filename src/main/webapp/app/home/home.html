@@ -53,11 +53,20 @@
                 <map center="[{{vm.center.lat}}, {{vm.center.lng}}]" zoom="14">
                     
 
-                    <marker position="[{{vendedora.lat}}, {{vendedora.lng}}]" ng-repeat="vendedora in vm.vendedoras" ng-if="vendedora.online" on-click="myfunc()" icon="{{vendedora.icon}} " />
+                    <marker position="[{{vendedora.lat}}, {{vendedora.lng}}]" ng-repeat="vendedora in vm.vendedoras" ng-if="vendedora.online" on-click="vm.calcDistancia(vendedora.lat, vendedora.lng, vm.center.lat, vm.center.lng, 'N')" icon="{{vendedora.icon}} " />
 
-                    <marker position="[{{vendedora.lat}}, {{vendedora.lng}}]" ng-repeat="vendedora in vm.vendedoras" ng-if="!vendedora.online" on-click="myfunc()" icon="{{vm.online}} " />
+                    <marker position="[{{vendedora.lat}}, {{vendedora.lng}}]" ng-repeat="vendedora in vm.vendedoras" ng-if="!vendedora.online" on-click="vm.calcDistancia(vendedora.lat, vendedora.lng, vm.center.lat, vm.center.lng, 'N')" icon="{{vm.online}} " />
 
                     <marker  position="[{{vm.center.lat}}, {{vm.center.lng}}]" on-click="myfunc()" icon="http://encontreeudora.com.br/Images/bg/pin-minha-localizacao.png"/>
+
+                    <directions
+                     draggable="true"
+                     panel="directions-panel"
+                     travel-mode=""
+                     waypoints="[{location:'kingston', stopover:true}]"
+                     origin="{{vendedora.lat}}, {{vendedora.lng}}"
+                     destination="{{vm.destination.lat}},  {{vm.destination.lng}}">
+                   </directions>
                 </map>
               <!-- </ng-map> -->
             </div>
