@@ -14,6 +14,15 @@
         vm.clear = clear;
         vm.save = save;
         vm.revendedoras = Revendedora.query();
+        vm.produtos = [];
+
+        loadAll();
+
+        function loadAll() {
+            Produto.query(function(result) {
+                vm.produtos = result;
+            });
+        }
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

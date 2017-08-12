@@ -1,107 +1,28 @@
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-  $( function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    function split( val ) {
-      return val.split( /,\s*/ );
-    }
-    function extractLast( term ) {
-      return split( term ).pop();
-    }
- 
-    $( "#field_codigo" )
-      // don't navigate away from the field on tab when selecting an item
-      .on( "keydown", function( event ) {
-        if ( event.keyCode === $.ui.keyCode.TAB &&
-            $( this ).autocomplete( "instance" ).menu.active ) {
-          event.preventDefault();
-        }
-      })
-      .autocomplete({
-        minLength: 0,
-        source: function( request, response ) {
-          // delegate back to autocomplete, but extract the last term
-          response( $.ui.autocomplete.filter(
-            availableTags, extractLast( request.term ) ) );
-        },
-        focus: function() {
-          // prevent value inserted on focus
-          return false;
-        },
-        select: function( event, ui ) {
-          var terms = split( this.value );
-          // remove the current input
-          terms.pop();
-          // add the selected item
-          terms.push( ui.item.value );
-          // add placeholder to get the comma-and-space at the end
-          terms.push( "" );
-          this.value = terms.join( ", " );
-          return false;
-        }
-      });
-  } );
-  </script>
 <form name="editForm" role="form" novalidate ng-submit="vm.save()">
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myProdutoLabel">Create or edit a Produto</h4>
+        <h4 class="modal-title" id="myProdutoLabel">Produto</h4>
     </div>
-    <div class="modal-body">
+    <div class="modal-body col-md-12">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label class="control-label" for="field_codigo">Código</label>
             <input type="text" class="form-control" name="codigo" id="field_codigo"
                     ng-model="vm.produto.codigo"
                      />
         </div>
-        <div class="form-group">
-            <label class="control-label" for="field_foto">Url da Foto</label>
-            <input type="text" class="form-control" name="foto" id="field_foto"
-                    ng-model="vm.produto.foto"
-                     />
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_quantidade">Quantidade</label>
-            <input type="number" class="form-control" name="quantidade" id="field_quantidade"
-                    ng-model="vm.produto.quantidade"
-                     />
-        </div>
     </div>
+
+    <div class="modal-body col-md-12" ng-repeat="produto in vm.produtos | filter: {codigo: vm.produto.codigo}">
+        <span>{{produto.codigo}} - {{produto.nome}}</span>
+        <button type="button" class="btn btn-default" ng-click="vm.add()">add</button>
+    </div>
+
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
-        </button>
-        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancelar</span>
         </button>
     </div>
 </form>
