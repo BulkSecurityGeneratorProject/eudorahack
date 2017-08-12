@@ -15,7 +15,17 @@
         vm.login = LoginService.open;
         vm.register = register;
         vm.center = {};
-        vm.vendedoras = [
+        vm.vendedoras = [];
+
+        $scope.$on('authenticationSuccess', function() {
+            getAccount();
+        });
+        NavigatorGeolocation.getCurrentPosition().then(function(position) {
+         var lat = position.coords.latitude, lng = position.coords.longitude;
+         vm.center.lat = lat;
+         vm.center.lng = lng;
+
+         vm.vendedoras = [
             {
                 lat: -12.976952,
                 lng: -38.502818
@@ -37,14 +47,6 @@
                 lng: -38.502474
             }
         ];
-        
-        $scope.$on('authenticationSuccess', function() {
-            getAccount();
-        });
-        NavigatorGeolocation.getCurrentPosition().then(function(position) {
-         var lat = position.coords.latitude, lng = position.coords.longitude;
-         vm.center.lat = lat;
-         vm.center.lng = lng;
        });
 
         NgMap.getMap().then(function(map) {

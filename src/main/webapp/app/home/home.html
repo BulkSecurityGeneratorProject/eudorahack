@@ -43,9 +43,9 @@
                 <map center="[{{vm.center.lat}}, {{vm.center.lng}}]" zoom="14">
                     
 
-                    <marker position="[{{vendedora.lat}}, {{vendedora.lng}}]" ng-repeat="vendedora in vm.vendedoras" on-click="myfunc()"></div>
+                    <marker position="[{{vendedora.lat}}, {{vendedora.lng}}]" ng-repeat="vendedora in vm.vendedoras" on-click="myfunc()" icon='http://encontreeudora.com.br/Images/bg/pin-revendedora.png' />
 
-                    <marker position="[{{vm.center.lat}}, {{vm.center.lng}}]" on-click="myfunc()"></div>
+                    <marker position="[{{vm.center.lat}}, {{vm.center.lng}}]" on-click="myfunc()" icon="http://encontreeudora.com.br/Images/bg/pin-minha-localizacao.png"/>
                 </map>
               <!-- </ng-map> -->
             </div>
