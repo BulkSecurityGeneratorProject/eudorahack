@@ -17,6 +17,8 @@
         vm.localizacaos = Localizacao.query();
         vm.users = User.query();
 
+        vm.produtoss = [1,2,3,4];
+
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
