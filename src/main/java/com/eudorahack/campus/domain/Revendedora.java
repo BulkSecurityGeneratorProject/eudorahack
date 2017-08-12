@@ -27,6 +27,9 @@ public class Revendedora implements Serializable {
     @Column(name = "longitude")
     private Double longitude;
 
+    @Column(name = "status")
+    private Boolean status;
+
     @OneToMany(mappedBy = "revendedora")
     @JsonIgnore
     private Set<Produto> produtos = new HashSet<>();
@@ -71,6 +74,19 @@ public class Revendedora implements Serializable {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public Boolean isStatus() {
+        return status;
+    }
+
+    public Revendedora status(Boolean status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public Set<Produto> getProdutos() {
@@ -162,6 +178,7 @@ public class Revendedora implements Serializable {
             "id=" + id +
             ", latitude='" + latitude + "'" +
             ", longitude='" + longitude + "'" +
+            ", status='" + status + "'" +
             '}';
     }
 }

@@ -30,6 +30,10 @@
         {
             "fieldName": "longitude",
             "fieldType": "Double"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20170812032430",

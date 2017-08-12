@@ -43,6 +43,9 @@ public class RevendedoraResourceIntTest {
     private static final Double DEFAULT_LONGITUDE = 1D;
     private static final Double UPDATED_LONGITUDE = 2D;
 
+    private static final Boolean DEFAULT_STATUS = false;
+    private static final Boolean UPDATED_STATUS = true;
+
     @Inject
     private RevendedoraRepository revendedoraRepository;
 
@@ -79,7 +82,8 @@ public class RevendedoraResourceIntTest {
         Revendedora revendedora = new Revendedora();
         revendedora = new Revendedora()
                 .latitude(DEFAULT_LATITUDE)
-                .longitude(DEFAULT_LONGITUDE);
+                .longitude(DEFAULT_LONGITUDE)
+                .status(DEFAULT_STATUS);
         return revendedora;
     }
 
@@ -106,6 +110,7 @@ public class RevendedoraResourceIntTest {
         Revendedora testRevendedora = revendedoras.get(revendedoras.size() - 1);
         assertThat(testRevendedora.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
         assertThat(testRevendedora.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
+        assertThat(testRevendedora.isStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
@@ -120,7 +125,8 @@ public class RevendedoraResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(revendedora.getId().intValue())))
                 .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
-                .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())));
+                .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())))
+                .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.booleanValue())));
     }
 
     @Test
@@ -135,7 +141,8 @@ public class RevendedoraResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(revendedora.getId().intValue()))
             .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.doubleValue()))
-            .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.doubleValue()));
+            .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.doubleValue()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.booleanValue()));
     }
 
     @Test
@@ -157,7 +164,8 @@ public class RevendedoraResourceIntTest {
         Revendedora updatedRevendedora = revendedoraRepository.findOne(revendedora.getId());
         updatedRevendedora
                 .latitude(UPDATED_LATITUDE)
-                .longitude(UPDATED_LONGITUDE);
+                .longitude(UPDATED_LONGITUDE)
+                .status(UPDATED_STATUS);
 
         restRevendedoraMockMvc.perform(put("/api/revendedoras")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -170,6 +178,7 @@ public class RevendedoraResourceIntTest {
         Revendedora testRevendedora = revendedoras.get(revendedoras.size() - 1);
         assertThat(testRevendedora.getLatitude()).isEqualTo(UPDATED_LATITUDE);
         assertThat(testRevendedora.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
+        assertThat(testRevendedora.isStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test
