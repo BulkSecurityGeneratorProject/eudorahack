@@ -12,4 +12,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface ProdutoRepository extends JpaRepository<Produto,Long> {
 
+	@Query("select produto from Produto produto left join produto.revendedora r where r.id = null")
+    List<Produto> getProdutos();
+
 }

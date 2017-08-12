@@ -128,4 +128,13 @@ public class RevendedoraResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("revendedora", id.toString())).build();
     }
 
+    @RequestMapping(value = "/search/getRevendedoraByUser/{idUser}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public Revendedora getRevendedoraByUser(@PathVariable Long idUser) {
+        Revendedora revendedora = revendedoraRepository.getRevendedoraByUser(idUser);
+        return revendedora;
+    }
+
 }

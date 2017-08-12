@@ -5,16 +5,20 @@
         .module('eudorahackApp')
         .controller('ProdutoDialogController', ProdutoDialogController);
 
-    ProdutoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Produto', 'Revendedora'];
+    ProdutoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Produto', 'Revendedora', 'RevendedoraGet', 'Principal'];
 
-    function ProdutoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Produto, Revendedora) {
+    function ProdutoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Produto, Revendedora, RevendedoraGet, Principal) {
         var vm = this;
 
         vm.produto = entity;
         vm.clear = clear;
         vm.save = save;
-        vm.revendedoras = Revendedora.query();
+        //vm.revendedoras = Revendedora.query();
         vm.produtos = [];
+        vm.add = add;
+        vm.produtoNovo = {};
+        vm.produtoNovo.revendedora = {};
+        vm.usuarioLogado = {};
 
         loadAll();
 
@@ -24,8 +28,21 @@
             });
         }
 
-        $timeout(function (){
+        $timeout(function () {
             angular.element('.form-group:eq(1)>input').focus();
+            Principal.fullIdentity().then(function(data){
+                data.$promise.then(function(user){
+                    vm.usuarioLogado = user;
+                    RevendedoraGet.get({idUser:vm.usuarioLogado.id}, function(data) {
+                        delete data.$promise;
+                        delete data.$resolved;
+                        vm.revendedora = data;
+                        
+                    });  
+                });
+            });
+
+
         });
 
         function clear () {
@@ -49,6 +66,15 @@
 
         function onSaveError () {
             vm.isSaving = false;
+        }
+
+        function add (produto) {
+            vm.produtoNovo.codigo = produto.codigo;
+            vm.produtoNovo.foto = produto.foto;
+            vm.produtoNovo.nome = produto.nome;
+            vm.produtoNovo.quantidade = 1;           
+            vm.produtoNovo.revendedora = vm.revendedora;
+            Produto.save(vm.produtoNovo, onSaveSuccess, onSaveError);
         }
 
 

@@ -88,7 +88,7 @@ public class ProdutoResource {
     @Timed
     public List<Produto> getAllProdutos() {
         log.debug("REST request to get all Produtos");
-        List<Produto> produtos = produtoRepository.findAll();
+        List<Produto> produtos = produtoRepository.getProdutos();
         return produtos;
     }
 
