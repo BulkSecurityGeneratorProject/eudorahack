@@ -26,6 +26,40 @@
             resolve: {
             }
         })
+        .state('revendedora.perfil', {
+            parent: 'revendedora',
+            url: '/perfil',
+            data: {
+                authorities: [],
+                pageTitle: 'Revendedora - Perfil'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'app/entities/revendedora/revendedora-perfil.html',
+                    controller: 'RevendedoraController',
+                    controllerAs: 'vm'
+                }
+            },
+            resolve: {
+            }
+        })
+        .state('revendedora.chat', {
+            parent: 'revendedora',
+            url: '/chat',
+            data: {
+                authorities: [],
+                pageTitle: 'Revendedora - Chat'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'app/entities/revendedora/revendedora-chat.html',
+                    controller: 'RevendedoraController',
+                    controllerAs: 'vm'
+                }
+            },
+            resolve: {
+            }
+        })
         .state('revendedora-detail', {
             parent: 'entity',
             url: '/revendedora/{id}',
